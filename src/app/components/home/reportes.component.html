@@ -1,0 +1,135 @@
+
+
+<div class="loadig-wraper" *ngIf="isLoading">
+	<figure>
+
+	</figure>
+</div>
+<div class="container">
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  <a class="navbar-brand" href="#">Empresa</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+	    <div class="navbar-nav">
+	      <a class="nav-item nav-link active">Incidencias <span class="sr-only">(current)</span></a>
+	      <a class="nav-item nav-link">Perfil</a>
+	      <a class="nav-item nav-link" href="/login">Cerrar sesiòn</a>
+	    </div>
+	  </div>
+	</nav>
+
+	<div class="col-md-12" style="margin-top: 2%;">
+		<h3 class="col-md-12">Hola {{ user }}</h3>
+		<div class="col-md-12">
+			<div class="col-md-12">
+				<p class="lead">Lista de incidencias, puedes buscar un responsable por <b>nombre</b>, <b>id Rec</b> y por <b>Empresa</b>.</p>
+			</div>
+			<div class="col-md-3 offset-md-8">
+				<button type="button" class="btn btn-primary btn-sm" name="button" data-toggle="modal" data-target="#modalUpload" (click)="showModalUpload()">Subir documento</button>
+			</div>
+		</div>
+		<hr class="my-4">
+	</div>
+	<div class="jumbotron">
+		<div class="col-md-4 offset-md-8" style="margin-bottom: 1%;">
+			<input type="text" name="inputSearch" id="inputSearch" [(ngModel)]="inputSearch" class="form-control" placeholder="filtrar incidencia" autofocus="">
+		</div>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Semestre</th>
+					<th scope="col">id Rec</th>
+					<th scope="col">Titulo Recomendacion</th>
+					<th scope="col">Riesgo</th>
+					<th scope="col">Esfuerzo</th>
+					<th scope="col">Responsable</th>
+					<th scope="col">Empresa</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-toggle="modal" (click)="showModalDatail(incidenca)" data-target="#exampleModal" *ngFor="let incidenca of ListIncidencias | filterIncidenca:inputSearch; let i = index ">
+					<th scope="row">{{ i + 1 }}</th>
+					<td>{{incidenca.semestre}}</td>
+					<td>{{incidenca.id_rec}}</td>
+					<td>{{incidenca.titulo_recomendacion}}</td>
+					<td>{{incidenca.riesgo}}</td>
+					<td>{{incidenca.esfuerzo}}</td>
+					<td>{{incidenca.responsable}}</td>
+					<td>{{incidenca.empresa}}</td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" *ngIf="incidencia" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ titile_modal }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4>id Rec <small>{{ incidencia.id_rec }}</small></h4>
+		<div class="col-md-12">
+			<p>
+				<b>Responsable:</b><small>{{ incidencia.responsable }}</small>
+			</p>
+		</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+		<a href="http://localhost:8000/reportes/{{ incidencia.responsable }}" class="btn btn-primary" >Descargar incidencas</a>
+        <!-- <button type="button"  (click)="dowloadFile()">Descargar Reporte</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" *ngIf="showModalUploadFile" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Subir documento exel</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		  <div class="row">
+
+		  </div>
+		  <div class="dropzone zone" fileDrop (filesDropped)="uploadFileDrop($event)"
+			  (filesHovered)="dropzoneState($event)"
+			  [ngClass]="{'active': dropzoneActive}"
+			  >
+			  <i class="fa fa-cloud-upload fa-2x"></i>
+			  <!-- <a href="javascript:void(0)" (click)="file_p.click()" > -->
+			  <a href="javascript:void(0)" (click)="inputFile.click()">
+				  <!-- <img src="{{ pathIconProject }}" alt="" id="drop" *ngIf="pathIconProject"> -->
+				  <img src="../../../assets/icn_subir-doc.png" alt="" id="drop">
+				  <br/>
+				  <br/>
+				  <div id="zone-descript">
+					 	Arrastra un documento para cargar la informacion
+					  <br/>
+					  <small style="color: red;">{{ msj }}</small>
+				  </div>
+			  </a>
+			  <input type="file" (change)="uploadFile($event)" #inputFile id="inputFile" style="display:none" #inputFile name="inputFile" accept=".xlsx">
+		  </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,64 @@
 /* You can add global styles to this file, and also import other style files */
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+div.container-form{
+	margin-left: 34%;
+    margin-top: 10%;
+}
+
+div.card{
+	padding: 1em;
+	/* background-color: #292C30; */
+}
+
+#profile-img{
+	border-radius: 50%;
+}
+
+.header-home{
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+div.loadig-wraper{
+	height: 100%;
+	position: absolute;
+	top: 0%;
+	z-index: 9999;
+	width: 100%;
+	opacity: 0.6;
+	background-color: black;
+}
+figure {
+	height: 110px;
+	width: 100%;
+	margin-top: 20%;
+	background-color: transparent;
+	background-image: url('/assets/loading.gif');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: contain;
+}
+
+.dropzone{
+	border-style: dashed;
+	margin-left: 4%;
+	margin-right: 4%;
+	background-color: #E7E7E7;
+	border-color: #838597;
+	text-align: center;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+.active {
+	background-color: #DDFFDD;
+}

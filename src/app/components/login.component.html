@@ -1,0 +1,41 @@
+<div class="container">
+	<div class="col-md-5" style="margin-left: 24%;">
+		<div class="card card-container margin-card center-block container-form">
+			<!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+			<img id="profile-img" class="col-md-offset-3 col-md-6  img-circle " style="margin-left: 20%;" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png">
+
+			<p id="profile-name" class="profile-name-card"></p>
+
+			<form class="form-signin" #f="ngForm" (ngSubmit)="login(f)">
+
+				<span id="reauth-email" class="reauth-email"></span>
+
+				<input type="text" name="inputUser" id="inputUser" ngModel #inputUser="ngModel" class="form-control " placeholder="Ingresa tu usuario" autofocus="" required>
+
+				<div class="col-12 alerts">
+					<span class="text-danger" role="alert" *ngIf="inputUser.invalid && (inputUser.dirty || inputUser.touched)">Usuario invalido</span>
+				</div>
+
+				<input type="password" name="inputPassword" id="inputPassword" ngModel #inputPassword="ngModel" class="form-control" placeholder="Clave Minimo 8 caracteres" required>
+
+				<div class="col-12 alerts">
+					<span class="text-danger" role="alert" *ngIf="inputPassword.invalid && (inputPassword.dirty || inputPassword.touched)" >Contraseña invalida</span>
+				</div>
+
+				<div class="alert alert-danger alert-dismissible" role="alert" style="padding-right: 0px" *ngIf="showAlertDanger">
+				  <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+				  <strong>Error!</strong> {{ msjError }}
+				</div>
+
+				<button class="btn btn-lg btn-primary btn-block btn-signin" *ngIf="inputPassword.errors || inputUser.errors" disabled>Entrar</button>
+				<button class="btn btn-lg btn-primary btn-block btn-signin" *ngIf="!inputPassword.errors && !inputUser.errors">Entrar</button>
+			</form>
+			<!-- /form -->
+
+			<a href="#" class="forgot-password">
+	          ¿Olvidaste la contraseña?
+	      </a>
+
+		</div>
+	</div>
+</div>
