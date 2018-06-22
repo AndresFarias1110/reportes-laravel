@@ -30,8 +30,14 @@ export class ReportesComponent implements OnInit {
 	getAllIncidencias() {
 		this.isLoading = true;
 		this.uploadService.getAllIncidencias().subscribe(rs => {
-			this.ListIncidencias = rs;
+			const responsable = 'responsable';
+			const filteredArray = rs.filter((obj, pos, arr) => {
+                return arr.map(mapObj => mapObj[responsable]).indexOf(obj[responsable]) === pos;
+			});
+
+			this.ListIncidencias = filteredArray;
 			console.log('ListIncidencias:', this.ListIncidencias);
+
 			this.isLoading = false;
 		}, err => {
 			console.log(err)
@@ -82,7 +88,7 @@ export class ReportesComponent implements OnInit {
 
 	uploadFileDrop(fileList: FileList) {
 		console.log('handleDrop(fileList):', fileList);
-		if (fileList[0].type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+		if (fileList[0].type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
 			// console.log('fileList[0].type:', fileList[0].type)
 			this.uploadFileRequest(fileList[0]);
 		} else {
@@ -96,8 +102,29 @@ export class ReportesComponent implements OnInit {
 	}
 
 	dowloadFile() {
-		this.uploadService.dowloadFile(this.incidencia.responsable).subscribe(rs => { console.log(rs) }, err => {
-			console.log(err)
+		this.isLoading = true;
+		this.uploadService.dowloadFile(this.incidencia.responsable).subscribe(rs => { console.log(rs);
+			this.isLoading = false;
+		}, err => {
+			console.log(err);
+			this.isLoading = false;
+		});
+	}
+
+	dowloadDireccionDF() {
+		// this.isLoading = true;
+		this.uploadService.dowloadFileDF().subscribe(rs => {
+			console.log('termina la descarga');
+			// this.isLoading = false;
+		}, err => {
+			console.log(err);
+			// this.isLoading = false;
+		});
+	}
+
+	dowloadDireccionDE() {
+		this.uploadService.dowloadFileDE().subscribe(rs => { console.log(rs); }, err => {
+			console.log(err);
 		});
 	}
 }
