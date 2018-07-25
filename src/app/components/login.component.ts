@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 	constructor(public router: Router, private loginService: LoginService) { }
 
 	ngOnInit() {
-		this.loginService.testGetPhase().subscribe(rs => console.log(rs));
+		//this.loginService.testGetPhase().subscribe(rs => console.log(rs));
 	 }
 
 	login(f: NgForm) {

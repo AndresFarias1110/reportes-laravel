@@ -30,16 +30,4 @@ export class LoginService {
             return user;
         });
 	}
-
-	testGetPhase() {
-		const headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        return this.http.get('http://localhost:1337/project/phase/task/comments/51/6', { headers }
-        ).map((response: Response) => {
-            console.log(JSON.parse(response.text()));
-            // console.log(response.text());
-            localStorage.setItem('tasks', response.text());
-            return  JSON.parse(response.text());
-        });
-	}
 }
